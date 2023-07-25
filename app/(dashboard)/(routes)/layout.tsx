@@ -1,5 +1,11 @@
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'Rahdeg | Dashboard',
+    description: 'AI Dashboard',
+  }
 
 const DashboardLayout =({
     children

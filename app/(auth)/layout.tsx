@@ -1,3 +1,5 @@
+import Meta from "@/helpers/Meta";
+
 const AuthLayout =({
     children
 }:{
@@ -5,6 +7,7 @@ const AuthLayout =({
 })=>{
     return (
         <div className="flex items-center justify-center h-full">
+            <Meta title="Login | Logout"/>
             {children}
         </div>
     )
