@@ -4,12 +4,9 @@ import { Card } from "@/components/ui/card"
 import {useRouter} from 'next/navigation'
 import { cn } from "@/lib/utils"
 import { ArrowRight, Code, ImageIcon, MessageSquare, Music, VideoIcon } from "lucide-react"
-import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'Rahdeg | Dashboard',
-  description: 'Dashboard',
-}
+
+
 
 const tools = [
 {

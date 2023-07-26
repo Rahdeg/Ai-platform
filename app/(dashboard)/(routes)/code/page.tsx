@@ -3,7 +3,7 @@
 import * as z from "zod"
 import axios from 'axios'
 import Heading from '@/components/heading'
-import { MessagesSquare } from 'lucide-react'
+import { Code } from 'lucide-react'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
@@ -18,10 +18,11 @@ import Loader from "@/components/loader"
 import { cn } from "@/lib/utils"
 import { UserAvatar } from "@/components/user-avatar"
 import { BotAvatar } from "@/components/bot-avatar"
+import ReactMarkdown from "react-markdown"
 
 
 
-const ConversationPage = () => {
+const CodePage = () => {
 
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([])
 
@@ -43,7 +44,7 @@ const onSubmit = async (values: z.infer<typeof formSchema>)=>{
       content: values.prompt
     };
     const newMessages = [...messages, userMessage];
-    const response = await axios.post("/api/conversation",{
+    const response = await axios.post("/api/code",{
       messages: newMessages,
     });
 
@@ -59,8 +60,8 @@ const onSubmit = async (values: z.infer<typeof formSchema>)=>{
 
   return (
     <div>
-      <Heading title='Conversation' description='Our most advanced conversation model'
-      icon={MessagesSquare} iconColor='text-violet-500' bgColor='bg-violet-500/10'/>
+      <Heading title='Code Generation' description='Generate code using descriptive text'
+      icon={Code} iconColor='text-green-500' bgColor='bg-green-500/10'/>
       <div className='px-4 lg:px-8'>
       <div>
         <Form {...form}>
@@ -75,7 +76,7 @@ const onSubmit = async (values: z.infer<typeof formSchema>)=>{
                 <FormControl className="m-0 p-0">
                   <Input className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                   disabled={isLoading}
-                  placeholder="How many planets do we have?"
+                  placeholder="Simple toogle button using react"
                   {...field}
                   />
                 </FormControl>
@@ -110,9 +111,21 @@ const onSubmit = async (values: z.infer<typeof formSchema>)=>{
                   )}
                   >
                     {message.role ==="user" ? <UserAvatar/> : <BotAvatar/>}
-                    <p className="text-sm">
-                    {message.content}
-                    </p>
+                   <ReactMarkdown
+                   components={{
+                    pre: ({node, ...props})=>(
+                      <div className=" overflow-auto w-full my-2 bg-black/10 p-2 rounded-lg">
+                        <pre {...props}/>
+                      </div>
+                    ),
+                    code:({node, ...props})=>(
+                      <code className=" bg-black/10 rounded-lg p-1" {...props}/>
+                    )
+                   }}
+                   className="text-sm overflow-hidden leading-7"
+                   >
+                    {message.content || ""}
+                   </ReactMarkdown>
                   </div>
                 ))
               }
@@ -123,4 +136,4 @@ const onSubmit = async (values: z.infer<typeof formSchema>)=>{
   )
 }
 
-export default ConversationPage
+export default CodePage
