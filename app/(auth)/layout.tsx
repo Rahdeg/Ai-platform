@@ -1,4 +1,10 @@
-import Meta from "@/helpers/Meta";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: 'Rahdeg | Auth',
+    description: 'AI Auth',
+  }
+
 
 const AuthLayout =({
     children
@@ -7,7 +13,7 @@ const AuthLayout =({
 })=>{
     return (
         <div className="flex items-center justify-center h-full">
-            <Meta title="Login | Logout"/>
+            
             {children}
         </div>
     )
