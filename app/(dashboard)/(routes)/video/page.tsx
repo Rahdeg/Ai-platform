@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import Empty from "@/components/empty"
 import Loader from "@/components/loader"
+import { useProModal } from "@/hooks/use-pro-modal"
 
 
 
@@ -21,6 +22,8 @@ import Loader from "@/components/loader"
 const VideoPage = () => {
 
   const [video, setVideo] = useState<string>()
+
+  const proModal = useProModal();
 
   const router = useRouter();
 
@@ -42,7 +45,9 @@ const onSubmit = async (values: z.infer<typeof formSchema>)=>{
     form.reset();
 
   } catch (error:any) {
-    console.log(error)
+    if (error?.response?.status === 403) {
+      proModal.onOpen();
+   }
   } finally {
     router.refresh();
   }

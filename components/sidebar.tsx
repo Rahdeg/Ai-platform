@@ -6,6 +6,7 @@ import {LayoutDashboard,MessageSquare,ImageIcon,VideoIcon, Music, Code, Settings
 import { Montserrat } from "next/font/google"
 import Image from "next/image"
 import Link from "next/link"
+import { FreeCounter } from "./free-counter"
 
 const montserrat = Montserrat({
     weight: "600",
@@ -57,7 +58,12 @@ const routes = [
     },
 ]
 
-const Sidebar = () => {
+interface SidebarProps {
+    apiLimitCount: number
+    isPro: boolean
+}
+
+const Sidebar = ( {apiLimitCount = 0, isPro= false}: SidebarProps) => {
     const pathname = usePathname()
 
   return (
@@ -82,6 +88,7 @@ const Sidebar = () => {
                 }
             </div>
         </div>
+        <FreeCounter apiLimitCount={apiLimitCount} isPro={isPro}/>
     </div>
   )
 }
