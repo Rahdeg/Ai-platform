@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 
 const tools = [
@@ -59,7 +60,7 @@ export const ProModal = ()=>{
     const response = await axios.get("/api/stripe");
     window.location.href= response.data.url;
         } catch (error) {
-            console.log(error)
+          toast.error("Something went wrong")
         } finally {
             setLoading(false);
         }
@@ -97,7 +98,7 @@ export const ProModal = ()=>{
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
-                        <Button className="w-full" size="lg" variant='premium' onClick={onSubscribe}>
+                        <Button className="w-full" size="lg" variant='premium' onClick={onSubscribe} disabled={loading}>
                             Upgrade
                             <Zap className="w-4 h-4 ml-2 fill-white"/>
                         </Button>
