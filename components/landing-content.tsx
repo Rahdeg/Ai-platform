@@ -1,5 +1,6 @@
 "use client"
 
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 
 const testimonial = [
@@ -40,11 +41,15 @@ const LandingContent = () => {
                 testimonial.map((item)=>(
                     <Card key={item.describtion} className=" bg-[#192339] border-none text-white">
                         <CardHeader>
-                            <CardTitle className=" flex items-center gap-x-2"> 
+                            <CardTitle className=" flex items-center justify-between gap-x-2"> 
                             <div className="">
                                 <p className=" text-lg">{item.name}</p>
                                 <p className=" text-zinc-400 text-sm">{item.title}</p>
                             </div>
+                            <Avatar>
+                            <AvatarImage src="https://github.com/shadcn.png" />
+                            <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
                             </CardTitle>
                             <CardContent className=" pt-4 px-0">
                                 {item.describtion}
