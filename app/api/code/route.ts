@@ -17,11 +17,7 @@ const instructionMessage : ChatCompletionRequestMessage ={
     content: "You are a code generator, You must answer only in markdown code snippets. use code comment for explanations."
 }
 
-const sleep = async (ms: number) => {
-    await new Promise(resolve => {
-      setTimeout(resolve, ms);
-    });
-  };
+
 
 
 export async function POST(req : Request){
@@ -29,7 +25,7 @@ export async function POST(req : Request){
         const {userId} = auth();
         const body = await req.json();
         const {messages} = body;
-        const threeMinutes = 3 * 60 * 1000;
+       
     
     if (!userId) {
        return new NextResponse("Unauthorized",{status: 401});
@@ -50,7 +46,6 @@ export async function POST(req : Request){
     return new NextResponse("Free trial has expired",{status: 403}); 
     }
 
-    await sleep(60000);
 
     const response = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
@@ -61,6 +56,7 @@ export async function POST(req : Request){
         await increaseApiLimit();
     }
     
+    await new Promise(resolve => setTimeout(resolve, 60000));
 
     return NextResponse.json(response.data.choices[0].message);
 
