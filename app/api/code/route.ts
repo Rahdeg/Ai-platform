@@ -4,6 +4,8 @@ import {ChatCompletionRequestMessage, Configuration, OpenAIApi} from 'openai'
 import { increaseApiLimit,checkApiLimit } from '@/lib/api-limit';
 import { checkSubscription } from '@/lib/subscription';
 
+
+
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
 })
@@ -15,11 +17,19 @@ const instructionMessage : ChatCompletionRequestMessage ={
     content: "You are a code generator, You must answer only in markdown code snippets. use code comment for explanations."
 }
 
+const sleep = async (ms: number) => {
+    await new Promise(resolve => {
+      setTimeout(resolve, ms);
+    });
+  };
+
+
 export async function POST(req : Request){
     try {
         const {userId} = auth();
         const body = await req.json();
         const {messages} = body;
+        const threeMinutes = 3 * 60 * 1000;
     
     if (!userId) {
        return new NextResponse("Unauthorized",{status: 401});
@@ -39,6 +49,8 @@ export async function POST(req : Request){
     if (!freeTrial && !isPro) {
     return new NextResponse("Free trial has expired",{status: 403}); 
     }
+
+    await sleep(60000);
 
     const response = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
