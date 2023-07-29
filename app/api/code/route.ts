@@ -56,7 +56,6 @@ export async function POST(req : Request){
         await increaseApiLimit();
     }
     
-    await new Promise(resolve => setTimeout(resolve, 60000));
 
     return NextResponse.json(response.data.choices[0].message);
 
